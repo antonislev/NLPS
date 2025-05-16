@@ -1,0 +1,33 @@
+import nltk
+from sentence_transformers import SentenceTransformer, util
+
+nltk.download('punkt')
+model = SentenceTransformer('all-MiniLM-L6-v2')
+
+# 1. Αρχική πρόταση (πχ από Κείμενο 2)
+input_sentence = "Anyway, I believe the team, although bit delay and less communication at recent days, they really tried best for paper and cooperation."
+
+# 2. Λεξικό ορθών εκδοχών για πιθανή αντικατάσταση
+rephrasing_dict = {
+    "bit delay": "some delays",
+    "less communication": "limited communication",
+    "at recent days": "in recent days",
+    "tried best": "gave their best effort",
+    "for paper and cooperation": "on the paper and collaboration"
+}
+
+# 3. Αυτόματη ανακατασκευή μέσω αντικατάστασης
+def reconstruct(text, replacements):
+    for wrong, right in replacements.items():
+        text = text.replace(wrong, right)
+    return text
+
+reconstructed = reconstruct(input_sentence, rephrasing_dict)
+
+# 4. Υπολογισμός cosine similarity
+embedding_orig = model.encode(input_sentence)
+embedding_recon = model.encode(reconstructed)
+similarity = util.cos_sim(embedding_orig, embedding_recon)
+
+print("Ανακατασκευασμένη:", reconstructed)
+print("Συνάφεια (cosine):", similarity.item())
