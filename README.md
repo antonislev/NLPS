@@ -87,6 +87,34 @@
 | T5          | Αφαιρετικό   | Εύκαμπτο μοντέλο encoder-decoder της Google |
 | Clustering  | Εξαγωγικό    | Επιλέγει τις πιο αντιπροσωπευτικές προτάσεις μέσω ομαδοποίησης |
 
+## Αποτελέσματα
+
+=== Text 1 Summaries ===
+BART:    I got this message to see the approved message. Today is our dragon boat festival, in our Chinese culture. Hope you too, to enjoy it as my deepest wishes.
+T5:      cnn's john sutter: today is our dragon boat festival, to celebrate it with all safe and great in our lives . he says he got this message to see the approved message from the doctor .
+Cluster: Today is our dragon boat festival, in our Chinese culture, to celebrate it with all safe and great in
+our lives. I got this message to see the approved message. I am very appreciated the full support of the
+professor, for our Springer proceedings publication.
+
+=== Text 2 Summaries ===
+BART:    I believe the team, although bit delay and less communication at recent days, they really tried best for paper and cooperation. We should be grateful, I mean all of us, for the acceptance and efforts until the Springer link came finally last week.
+T5:      we should be grateful, I mean all of us, for the acceptance and efforts until the Springer link came finally last week . also, kindly remind me please, if the doctor still plan for the acknowledgments section edit before he sending again .
+Cluster: During our final discuss, I told him about the new submission — the one we were waiting since
+last autumn, but the updates was confusing as it not included the full feedback from reviewer or
+maybe editor? Anyway, I believe the team, although bit delay and less communication at recent days, they really
+tried best for paper and cooperation. Also, kindly remind me please, if the doctor still plan for the acknowledgments section edit before
+he sending again.
+
+## Τι παρατηρώ?
+BART (abstractive):
+Clean, concise, and fluent.
+
+T5 (abstractive):
+Sometimes makes up details (e.g. “CNN’s John Sutter”), showing T5's tendency to hallucinate.
+
+Cluster (extractive):
+Pulls directly from the original sentences. Gives a good factual snapshot of the key events.
+
 ---
 ### C. Σύγκριση Προσεγγίσεων
 
