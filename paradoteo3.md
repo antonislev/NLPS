@@ -142,11 +142,6 @@ score = 1 - cosine(vec_orig, vec_recon)
 | FastText | 0.987          | 0.980          |
 | BERT     | 0.991          | 0.989          |
 
-### 4.4. Οπτικοποίηση Semantic Shifts
-
-* **Σχήμα 1**: PCA scatter (μπλε=original, κόκκινο=spaCy)
-* **Σχήμα 2**: t‑SNE scatter (μπλε=original, πράσινο=remove stopwords)
-
 ---
 
 ## 5. Συζήτηση
