@@ -1,72 +1,75 @@
-📄 Περίληψη
+<div align="center">
+  <h1 style="font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size:2.5em;">NLP Project: Semantic Text Reconstruction</h1>
+  <h2 style="font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size:1.5em;">Λεβειδιώτης Αντώνης <small style="font-style:italic;">(ΑΜ: Π22084)</small></h2>
+  <p style="font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size:1em;"><strong>Τμήμα Πληροφορικής, Πανεπιστήμιο Πειραιώς</strong></p>
+</div>
 
-Σε αυτήν την εργασία αναπτύσσω και συγκρίνω μεθόδους σημασιολογικής ανακατασκευής κειμένου:
+---
 
-DFA-based Reconstruction: καθορισμός deterministic finite automaton για δύο προτάσεις-παράδειγμα.
+<div style="font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
 
-NLP Pipelines: spaCy, NLTK, Gensim.
+### 📄 Περίληψη
 
-Embeddings Analysis: Word2Vec, GloVe, FastText, BERT.
+> Σε αυτήν την εργασία αναπτύσσω και συγκρίνω μεθόδους **σημασιολογικής** ανακατασκευής κειμένου:
+>
+> * **DFA-based Reconstruction**: καθορισμός deterministic finite automaton για δύο προτάσεις-παράδειγμα.
+> * **NLP Pipelines**: spaCy, NLTK, Gensim.
+> * **Embeddings Analysis**: Word2Vec, GloVe, FastText, BERT.
+> * **Visualization**: PCA & t-SNE.
 
-Visualization: PCA & t-SNE.
+---
 
-🗂️ Περιεχόμενα
+### 🗂️ Περιεχόμενα
 
-Script
+| Script                    | Περιγραφή                           |
+| ------------------------- | ----------------------------------- |
+| `1A.py`      | Υλοποίηση DFA για 2 προτάσεις.      |
+| `1B.py` | spaCy, NLTK, Gensim pipelines       |
+| `1C.py` | Σύγκριση αποτελεσμάτων       |
+| `nlp2.py`  | Cosine similarity & mean embeddings |
+| `vis.py`         | Οπτικοποίηση PCA & t-SNE            |
 
-Περιγραφή
+---
 
-dfa_reconstruct.py
+### 🚀 Οδηγίες Εκτέλεσης
 
-Υλοποίηση DFA για 2 προτάσεις.
+1. **Δημιουργία venv**:
 
-pipeline_reconstruct.py
+   ```bash
+   python -m venv venv
+   # Linux/Mac
+   source venv/bin/activate
+   # Windows
+   venv\Scripts\Activate.ps1
+   ```
+2. **Εγκατάσταση**:
 
-spaCy, NLTK, Gensim pipelines
+   ```bash
+   pip install -r requirements.txt
+   ```
+3. **Εκτέλεση Scripts**:
 
-embeddings_analysis.py
+   ```bash
+   python dfa_reconstruct.py
+   python pipeline_reconstruct.py
+   python embeddings_analysis.py
+   python vis.py
+   ```
 
-Cosine similarity & mean embeddings
+---
 
-vis.py
+### 🎯 Στόχοι
 
-Οπτικοποίηση PCA & t-SNE
+* **Ανάλυση** επιπτώσεων NLP pipelines στο νόημα.
+* **Μετρήσεις**: cosine similarity, TTR, Jaccard.
+* **Οπτικοποίηση**: PCA/t-SNE.
 
-requirements.txt
+---
 
-Απαιτούμενες βιβλιοθήκες
+### 📬 Επικοινωνία
 
-🚀 Οδηγίες Εκτέλεσης
+* **Email**: [your.email@example.com](mailto:your.email@example.com)
+* **Ημερομηνία**: 22 Ιουνίου 2025
 
-Δημιουργία venv:
+</div>
 
-python -m venv venv
-# Linux/Mac
-source venv/bin/activate
-# Windows
-venv\Scripts\Activate.ps1
-
-Εγκατάσταση:
-
-pip install -r requirements.txt
-
-Εκτέλεση Scripts:
-
-python dfa_reconstruct.py
-python pipeline_reconstruct.py
-python embeddings_analysis.py
-python vis.py
-
-🎯 Στόχοι
-
-Ανάλυση επιπτώσεων NLP pipelines στο νόημα.
-
-Μετρήσεις: cosine similarity, TTR, Jaccard.
-
-Οπτικοποίηση: PCA/t-SNE.
-
-📬 Επικοινωνία
-
-Email: your.email@example.com
-
-Ημερομηνία: 22 Ιουνίου 2025
