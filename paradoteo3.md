@@ -1,4 +1,4 @@
-**✍️AUTHOR**
+✍️ **Συγγραφέας**
 **ΛΕΒΕΙΔΙΩΤΗΣ ΑΝΤΩΝΗΣ** (ΑΜ: Π22084)
 Τμήμα Πληροφορικής, Πανεπιστήμιο Πειραιώς
 Έτος: 2025
@@ -7,158 +7,92 @@
 
 ## 📌 Περίληψη
 
-Η εργασία αυτή παρουσιάζει ένα ολοκληρωμένο πλαίσιο **σημασιολογικής ανακατασκευής κειμένου**. Συνδυάζονται rule‑based αυτοματοποιημένοι κανόνες (DFA), παραδοσιακά NLP pipelines (spaCy, NLTK, Gensim) και σύγχρονες ενσωματώσεις λέξεων (Word2Vec, GloVe, FastText, BERT). Πραγματοποιείται σύγκριση ως προς λεξιλογική πιστότητα (TTR, Jaccard), σημασιολογική συνάφεια (cosine similarity) και οπτικοποίηση μετατοπίσεων μέσω PCA/t‑SNE. Τα αποτελέσματα επιβεβαιώνουν τη διατήρηση νοήματος και αναδεικνύουν trade‑offs μεταξύ καθαρότητας και γενίκευσης.
+Η εργασία αυτή παρέχει μια αναλυτική προσέγγιση στη σημασιολογική ανακατασκευή κειμένων, συνδυάζοντας rule-based στρατηγικές και σύγχρονες τεχνικές NLP, όπως pipelines spaCy, NLTK, Gensim και embeddings Word2Vec, GloVe, FastText, BERT. Πραγματοποιείται διεξοδική σύγκριση με βάση λεξιλογικά metrics (TTR, Jaccard), σημασιολογική συνάφεια (cosine similarity) και οπτικοποιήσεις PCA/t-SNE. Τα αποτελέσματα αναδεικνύουν trade-offs μεταξύ λεξιλογικής πιστότητας και σημασιολογικής γενίκευσης.
 
 ---
 
 ## 1. Εισαγωγή
 
-Η **σημασιολογική ανακατασκευή κειμένου** στοχεύει στην παραγωγή καθαρών, συνεκτικών και ακριβών εκδόσεων πρωτογενών κειμένων, διατηρώντας παράλληλα το αρχικό νόημα. Μέσω τεχνικών NLP αφαιρούμε θόρυβο, γραμματικές ανωμαλίες και πλεονασμούς, ενώ με embeddings αποτυπώνουμε σημασιολογικές σχέσεις.
-
-**Συμβολή εργασίας**:
-
-1. Ορισμός και υλοποίηση **DFA** για δύο παράδειγμα προτάσεις (DFA‑based reconstruction).
-2. Σύγκριση **τριών Python pipelines** (spaCy, NLTK, Gensim) για ολόκληρα κείμενα.
-3. Εφαρμογή **Word2Vec, GloVe, FastText, BERT embeddings** και custom flows (Whitespace, Regex, Stopwords) με υπολογισμό cosine similarity.
-4. Οπτικοποίηση σημασιολογικών μετατοπίσεων μέσω **PCA** και **t‑SNE**.
+Η **σημασιολογική ανακατασκευή κειμένου** είναι κρίσιμη στην αποσαφήνιση, τον καθαρισμό και τη βελτίωση της ποιότητας των κειμένων, διατηρώντας παράλληλα τη βασική σημασιολογική τους υπόσταση. Με την αξιοποίηση τεχνικών NLP, όπως λεμματοποίηση και embeddings, επιτυγχάνεται η αφαίρεση θορύβου, γραμματικών ασαφειών και πλεονασμών, καθιστώντας τα κείμενα πιο κατανοητά και κατάλληλα για περαιτέρω αναλύσεις.
 
 ---
 
 ## 2. Μεθοδολογία
 
-### 2.1. Ανακατασκευή δύο προτάσεων (DFA)
+### 2.1. Στρατηγικές Ανακατασκευής
 
-Χρησιμοποιήθηκε ένας **Deterministic Finite Automaton** για τις προτάσεις:
+#### A. Γραμματική/Αξιώματα (DFA)
 
-* **A**: "The quick brown fox"
-* **B**: "Jump over lazy dog"
+Εφαρμόστηκε ένας **Deterministic Finite Automaton (DFA)** για ακριβή ανακατασκευή δύο προτάσεων:
 
-**Ορισμός DFA**:
+* Πρόταση Α: "The quick brown fox"
+* Πρόταση Β: "Jump over lazy dog"
 
-* Καταστάσεις: `q0` (start), `q1`–`q4` (A), `q5`–`q8` (B).
-* Αλφάβητο: οι λέξεις κάθε πρότασης.
-* Accept states: `q4` (τέλος A), `q8` (τέλος B).
+Οι καταστάσεις του DFA διαμορφώθηκαν έτσι ώστε να είναι μονοσήμαντες, προσφέροντας μια σαφή και επαναλήψιμη διαδικασία ανακατασκευής.
 
-```python
-transitions = {
-    ("q0", "The"): "q1",
-    ("q1", "quick"): "q2",
-    ("q2", "brown"): "q3",
-    ("q3", "fox"): "q4",
-    ("q0", "Jump"): "q5",
-    ("q5", "over"): "q6",
-    ("q6", "lazy"): "q7",
-    ("q7", "dog"): "q8"
-}
-```
+#### B. Γλωσσικοί Κανόνες (Pipelines)
 
-Μέσω **BFS** εξάγονται οι μοναδικές διαδρομές προς `q4` και `q8`, ανακατασκευάζοντας ακριβώς τις δύο προτάσεις.
+Χρησιμοποιήθηκαν τρία διαφορετικά pipelines:
 
-### 2.2. Τρία Python pipelines για ολόκληρα κείμενα
+* spaCy (λεμματοποίηση, stopwords)
+* NLTK (RegexpTokenizer, WordNet Lemmatizer)
+* Gensim (simple\_preprocess)
 
-Εφαρμόστηκαν στα δύο πρωτογενή κείμενα (Text1, Text2) οι εξής ροές:
+Τα pipelines στόχευσαν σε πλήρη κείμενα, εφαρμόζοντας διαφορετικές στρατηγικές tokenization και preprocessing για αναλυτική σύγκριση.
 
-1. **spaCy Lemmatization**: tokenization → αφαίρεση stopwords → λεμματοποίηση.
-2. **NLTK RegexpTokenizer**: regex-based tokenization → stopwords → WordNet lemmatizer.
-3. **Gensim simple\_preprocess**: deaccented tokenization → Gensim stopword list.
+#### C. Σημασιολογική Ανακατασκευή (Embeddings)
 
-Κατόπιν επανασυντέθηκαν τα tokens σε συνεχή κείμενα για περαιτέρω ανάλυση.
+Αξιοποιήθηκαν embeddings από Word2Vec, GloVe, FastText και BERT για την αποτύπωση σημασιολογικών σχέσεων μεταξύ των λέξεων και τη διατήρηση του νοήματος μετά από preprocessing.
 
-### 2.3. Metrics σύγκρισης
+### 2.2. Υπολογιστικές Τεχνικές
 
-Για κάθε pipeline και κείμενο υπολογίστηκαν:
+Για τη σημασιολογική ανάλυση εφαρμόστηκαν:
 
-* **Total tokens** & **Unique tokens**
-* **Type–Token Ratio (TTR)** = Unique / Total
-* **Jaccard Similarity** vs. αρχικό λεξιλόγιο
-
-Τα metrics ομαδοποιήθηκαν σε DataFrame και παρουσιάστηκαν με γραμμικά διαγράμματα.
+* Υπολογισμός Cosine similarity μεταξύ των μέσων διανυσμάτων embeddings των πρωτογενών και των ανακατασκευασμένων κειμένων.
+* Οπτικοποίηση των αποτελεσμάτων με PCA και t-SNE, για να φανεί η σημασιολογική σταθερότητα.
 
 ---
 
-## 3. Ενσωματώσεις Λέξεων & Semantic Analysis
+## 3. Πειράματα & Αποτελέσματα
 
-### 3.1. Προεκπαιδευμένα models
+### Παραδείγματα Ανακατασκευής
 
-* **Word2Vec** (Google News, 300d)
-* **GloVe** (Wiki‑Gigaword, 50d)
-* **FastText** (Wiki‑Subwords, 300d)
-* **BERT** (bert-base-uncased, mean-pooled)
+**Παράδειγμα κειμένου A (πριν/μετά):**
 
-### 3.2. Υπολογισμός cosine similarity
+* Πριν: "Today is our dragon boat festival, in our Chinese culture, to celebrate..."
+* Μετά (spaCy): "today dragon boat festival chinese culture celebrate safe great lives hope"
 
-Για κάθε κείμενο (πριν/μετά) υπολογίστηκε το μέσο embedding vector και η **cosine similarity**:
+### Metrics και Ανάλυση (Παραδοτέο 2)
 
-```python
-vec_orig = mean_embedding(orig_tokens, model)
-vec_recon = mean_embedding(recon_tokens, model)
-score = 1 - cosine(vec_orig, vec_recon)
-```
+| Pipeline | Text  | Total Tokens | Unique Tokens | TTR   | Jaccard Similarity |
+| -------- | ----- | ------------ | ------------- | ----- | ------------------ |
+| spaCy    | Text1 | 37           | 33            | 0.892 | 0.524              |
+| NLTK     | Text2 | 59           | 57            | 0.966 | 0.525              |
+| Gensim   | Text1 | 37           | 33            | 0.892 | 0.524              |
 
-### 3.3. Custom NLP flows
-
-Επιπλέον examiner pipelines:
-
-* Whitespace Split
-* Regex Tokenize
-* Remove Stopwords
-* Lemmatize (spaCy)
-* WordNet + Hypernyms
-
-### 3.4. Οπτικοποίηση (PCA & t‑SNE)
-
-Αρχικά εφαρμόστηκε **PCA→2D**, στη συνέχεια **t‑SNE→2D** (perplexity=30, init='random').
+| Model    | Cosine Similarity (Text1) | Cosine Similarity (Text2) |
+| -------- | ------------------------- | ------------------------- |
+| Word2Vec | 0.985                     | 0.978                     |
+| GloVe    | 0.982                     | 0.975                     |
+| FastText | 0.987                     | 0.980                     |
+| BERT     | 0.991                     | 0.989                     |
 
 ---
 
-## 4. Πειράματα & Αποτελέσματα
+## 4. Συζήτηση
 
-### 4.1. Ανακατασκευές
+Τα embeddings απέδωσαν υψηλή διατήρηση νοήματος (scores > 0.97), γεγονός που επιβεβαιώνει την αποτελεσματικότητά τους. Ωστόσο, η μεγαλύτερη πρόκληση ήταν η ισορροπία μεταξύ αφαίρεσης λέξεων (stopwords, hypernyms) και διατήρησης νοήματος.
 
-**Παράδειγμα A**:
+Η αυτοματοποίηση μπορεί να ενισχυθεί σημαντικά μέσω transformer-based μοντέλων, καθώς παρέχουν δυναμική σημασιολογική κατανόηση που ξεπερνά τις παραδοσιακές μεθόδους.
 
-* Πριν: "Today is our dragon boat festival"
-* DFA:  "Today is our dragon boat festival"
-
-**Text1 (spaCy)**:
-
-* Πριν: Today is our dragon boat festival, in our Chinese culture, to celebrate...
-* Μετά: today dragon boat festival chinese culture celebrate safe great lives hope
-
-### 4.2. Metrics
-
-| Pipeline | Text  | Total | Unique | TTR   | Jaccard |
-| -------- | ----- | ----- | ------ | ----- | ------- |
-| spaCy    | Text1 | 37    | 33     | 0.892 | 0.524   |
-| NLTK     | Text2 | 59    | 57     | 0.966 | 0.525   |
-| Gensim   | Text1 | 37    | 33     | 0.892 | 0.524   |
-
-### 4.3. Cosine Similarities
-
-| Model    | Text1 vs Recon | Text2 vs Recon |
-| -------- | -------------- | -------------- |
-| Word2Vec | 0.985          | 0.978          |
-| GloVe    | 0.982          | 0.975          |
-| FastText | 0.987          | 0.980          |
-| BERT     | 0.991          | 0.989          |
+Υπήρξαν αξιοσημείωτες διαφορές ποιότητας μεταξύ των pipelines. Για παράδειγμα, η spaCy προσέφερε υψηλή λεξιλογική καθαρότητα, ενώ η NLTK παρουσίασε μεγαλύτερη λεξιλογική ποικιλία αλλά μικρότερη πιστότητα σημασίας.
 
 ---
 
-## 5. Συζήτηση
+## 5. Συμπέρασμα
 
-Οι υψηλές similarity scores (>0.97) επιβεβαιώνουν τη διατήρηση του νοήματος ακόμη και μετά από έντονο preprocessing.
-Οι pipelines με stopword removal και hypernyms παρουσίασαν μικρότερες τιμές (\~0.90–0.92) εξαιτίας λεξιλογικών απωλειών.
-Η οπτικοποίηση PCA/t‑SNE δείχνει σταθερές τοπικές δομές: οι λέξεις διατηρούν τις ομάδες τους (π.χ. ζώα, χρώματα).
+Η εργασία ανέδειξε πως η επιλογή τεχνικών ανακατασκευής είναι συνάρτηση του επιθυμητού αποτελέσματος (πιστότητα έναντι γενίκευσης). Η ενσωμάτωση transformer-based μοντέλων φαίνεται ιδιαίτερα υποσχόμενη για πλήρη αυτοματοποίηση της σημασιολογικής ανακατασκευής. Μελλοντική κατεύθυνση αποτελεί η αξιοποίηση seq2seq μοντέλων όπως τα BART και T5 σε ειδικευμένα corpus για την περαιτέρω ενίσχυση της αποτελεσματικότητας και ακρίβειας της ανακατασκευής.
 
----
-
-## 6. Συμπεράσματα & Μελλοντικές Εργασίες
-
-* Δεν υπάρχει μία ιδανική pipeline· η επιλογή εξαρτάται από τον στόχο: **πιστότητα** vs. **γενίκευση**.
-* Συνδυαστικά rule‑based + transformer pipelines μπορούν να ενισχύσουν contextual paraphrasing.
-* Μελλοντικά: fine‑tuned seq2seq models (BART, T5) σε παράλληλα corpus για end‑to‑end παραφράσεις.
-
----
 
 ## 📁 Requirements
 
