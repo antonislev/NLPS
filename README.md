@@ -1,5 +1,5 @@
 <div align="center">
-  <h1 style="font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size:2.5em;">NLP Project: Semantic Text Reconstruction</h1>
+  <h1 style="font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size:2.5em;">NLP Project: Εργασία Ανάλυσης Φυσικής γλώσσας 2025</h1>
   <h2 style="font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size:1.5em;">Λεβειδιώτης Αντώνης <small style="font-style:italic;">(ΑΜ: Π22084)</small></h2>
   <p style="font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size:1em;"><strong>Τμήμα Πληροφορικής, Πανεπιστήμιο Πειραιώς</strong></p>
 </div>
