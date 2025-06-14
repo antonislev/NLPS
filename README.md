@@ -68,8 +68,8 @@
 
 ### 📬 Επικοινωνία
 
-* **Email**: [your.email@example.com](mailto:your.email@example.com)
-* **Ημερομηνία**: 22 Ιουνίου 2025
+* **Email**: [antonislev7@gmail.com](mailto:antonislev7@gmail.com)
+* **Ημερομηνία**: 21 Ιουνίου 2025
 
 </div>
 
