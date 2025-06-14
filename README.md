@@ -1,66 +1,72 @@
-NLP Project: Semantic Text Reconstruction
+📄 Περίληψη
 
-Λεβειδιώτης Αντώνης (ΑΜ: Π22084)
-
-Τμήμα Πληροφορικής, Πανεπιστήμιο Πειραιώς
-
-Περίληψη
-
-Σε αυτήν την εργασία αναπτύσσω και συγκρίνω διάφορες μεθόδους σημασιολογικής ανακατασκευής κειμένου. Οι κύριες συνιστώσες περιλαμβάνουν:
+Σε αυτήν την εργασία αναπτύσσω και συγκρίνω μεθόδους σημασιολογικής ανακατασκευής κειμένου:
 
 DFA-based Reconstruction: καθορισμός deterministic finite automaton για δύο προτάσεις-παράδειγμα.
 
-NLP Pipelines: εφαρμόζω spaCy, NLTK και Gensim για επεξεργασία ολόκληρων κειμένων.
+NLP Pipelines: spaCy, NLTK, Gensim.
 
-Embeddings Analysis: φόρτωση Word2Vec, GloVe, FastText, BERT και σύγκριση των embeddings πριν και μετά την ανακατασκευή.
+Embeddings Analysis: Word2Vec, GloVe, FastText, BERT.
 
-Visualization: οπτικοποίηση με PCA & t-SNE για ανάδειξη σημασιολογικών μετατοπίσεων.
+Visualization: PCA & t-SNE.
 
-Περιεχόμενα
+🗂️ Περιεχόμενα
 
-dfa_reconstruct.py: υλοποίηση DFA για δύο προτάσεις.
+Script
 
-pipeline_reconstruct.py: τρία Python pipelines (spaCy, NLTK, Gensim).
+Περιγραφή
 
-embeddings_analysis.py: φόρτωση embeddings, υπολογισμός cosine similarity.
+dfa_reconstruct.py
 
-vis.py: οπτικοποίηση PCA & t-SNE των embeddings.
+Υλοποίηση DFA για 2 προτάσεις.
 
-requirements.txt: απαραίτητες βιβλιοθήκες.
+pipeline_reconstruct.py
 
-Οδηγίες Εκτέλεσης
+spaCy, NLTK, Gensim pipelines
 
-Δημιουργήστε virtual environment:
+embeddings_analysis.py
+
+Cosine similarity & mean embeddings
+
+vis.py
+
+Οπτικοποίηση PCA & t-SNE
+
+requirements.txt
+
+Απαιτούμενες βιβλιοθήκες
+
+🚀 Οδηγίες Εκτέλεσης
+
+Δημιουργία venv:
 
 python -m venv venv
-source venv/bin/activate    # Linux/Mac
-venv\Scripts\activate.ps1 # Windows PowerShell
+# Linux/Mac
+source venv/bin/activate
+# Windows
+venv\Scripts\Activate.ps1
 
-Εγκαταστήστε τις απαιτήσεις:
+Εγκατάσταση:
 
 pip install -r requirements.txt
 
-Τρέξτε τα scripts:
+Εκτέλεση Scripts:
 
 python dfa_reconstruct.py
-
 python pipeline_reconstruct.py
-
 python embeddings_analysis.py
-
 python vis.py
 
-Στόχοι
+🎯 Στόχοι
 
-Αξιολόγηση πώς διαφορετικές τεχνικές NLP επιδρούν στο νόημα.
+Ανάλυση επιπτώσεων NLP pipelines στο νόημα.
 
-Ποσοτικές μετρήσεις μέσω cosine similarity, TTR, Jaccard.
+Μετρήσεις: cosine similarity, TTR, Jaccard.
 
-Ποιοτικές παρατηρήσεις μέσω οπτικοποιήσεων PCA/t-SNE.
+Οπτικοποίηση: PCA/t-SNE.
 
-Επικοινωνία
+📬 Επικοινωνία
 
 Email: your.email@example.com
 
-22 Ιουνίου 2025
-
+Ημερομηνία: 22 Ιουνίου 2025
